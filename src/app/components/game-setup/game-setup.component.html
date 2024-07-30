@@ -21,9 +21,10 @@
       </div>
     </div>
 
+
     <!-- Label for grid size selection -->
-    <label class="section-label">Select Grid Size:</label>
-    <div class="carousel-container">
+    <label *ngIf="gridSizes.length > 1" class="section-label">Select Grid Size:</label>
+    <div *ngIf="gridSizes.length > 1" class="carousel-container">
       <div
         *ngFor="let size of gridSizes"
         class="carousel-item"
