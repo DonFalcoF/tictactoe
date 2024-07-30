@@ -89,3 +89,26 @@ button:hover {
   background: #120c3a;
 }
 
+
+@media screen and (max-width: 768px) {
+  .container-content {
+    min-width: 80%;
+  }
+
+  .radio-container {
+    width: 80px;
+  }
+
+  .radio-card {
+    width: 30px;
+    height: 30px;
+    line-height: 30px;
+  }
+
+  .carousel-item {
+    width: 80px;
+    height: 40px;
+    line-height: 40px;
+    margin-right: 5px;
+  }
+}
