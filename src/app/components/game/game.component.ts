@@ -49,6 +49,8 @@ export class GameComponent implements OnInit {
   }
 
   onReplay(): void {
+    this.gameService.isAnimating = false;
+    this.gameService.winningLine = [];
     this.router.navigate(['/setup']);
   }
 

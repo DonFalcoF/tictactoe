@@ -11,7 +11,7 @@ export class GameService {
   private gridSize!: number;
   private initialized: boolean = false;
   private winner: string | null = null;
-  private winningLine: number[][] = [];
+  winningLine: number[][] = [];
   isAnimating: boolean = false;
 
   constructor() {}
