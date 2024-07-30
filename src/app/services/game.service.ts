@@ -11,6 +11,8 @@ export class GameService {
   private gridSize!: number;
   private initialized: boolean = false;
   private winner: string | null = null;
+  private winningLine: number[][] = [];
+  isAnimating: boolean = false;
 
   constructor() {}
 
@@ -63,10 +65,15 @@ export class GameService {
 
   makeMove(row: number, col: number): boolean {
     if (this.board[row][col] === '' && !this.gameOver) {
+      this.isAnimating = true;
       this.board[row][col] = this.currentPlayer;
       if (this.checkWin()) {
-        this.gameOver = true;
-        this.winner = this.currentPlayer;
+        // pause de 1 seconde avant de déclarer le gagnant
+        setTimeout(() => {
+          this.gameOver = true;
+          this.isAnimating = false;
+          this.winner = this.currentPlayer;
+        }, 1500);
       } else if (this.isBoardFull()) {
         this.gameOver = true;
         this.winner = null; // Match nul
@@ -93,6 +100,7 @@ export class GameService {
         emptyCells[Math.floor(Math.random() * emptyCells.length)];
       this.board[row][col] = this.currentPlayer;
       if (this.checkWin()) {
+        this.isAnimating = true;
         this.gameOver = true;
         this.winner = this.currentPlayer;
       } else if (this.isBoardFull()) {
@@ -102,6 +110,10 @@ export class GameService {
         this.switchPlayer();
       }
     }
+  }
+
+  isWinningCell(row: number, col: number): boolean {
+    return this.winningLine.some(([x, y]) => x === row && y === col);
   }
 
   private switchPlayer(): void {
@@ -118,10 +130,15 @@ export class GameService {
 
   private checkWin(): boolean {
     const winLines = this.generateWinLines();
-    return winLines.some((line) =>
-      line.every(([x, y]) => this.board[x][y] === this.currentPlayer)
-    );
+    for (const line of winLines) {
+      if (line.every(([x, y]) => this.board[x][y] === this.currentPlayer)) {
+        this.winningLine = line;
+        return true;
+      }
+    }
+    return false;
   }
+
 
   private generateWinLines(): number[][][] {
     const lines: number[][][] = [];

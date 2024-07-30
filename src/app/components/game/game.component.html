@@ -8,6 +8,7 @@
         class="cell"
         *ngFor="let cell of row; let colIndex = index"
         (click)="onCellClick(rowIndex, colIndex)"
+        [class.winning-cell]="gameService.isWinningCell(rowIndex, colIndex)"
       >
         <span [class.x]="cell === 'X'" [class.o]="cell === 'O'">{{
           cell
@@ -18,7 +19,7 @@
 </div>
 
 <app-game-over-modal
-  *ngIf="gameService.isGameOver()"
+  *ngIf="gameService.isGameOver() && !gameService.isAnimating"
   [winner]="gameService.getWinner()"
   (replay)="onReplay()"
 ></app-game-over-modal>

@@ -39,15 +39,12 @@ export class GameComponent implements OnInit {
       this.gameService.getCurrentPlayer() !==
         this.gameService.getInitialPlayer()
     ) {
-      setTimeout(() => {
-        if (
-          !this.gameService.isGameOver() &&
-          this.gameService.getCurrentPlayer() !==
-            this.gameService.getInitialPlayer()
-        ) {
-          this.gameService.makeRandomMove();
-        }
-      }, 200); // Temps de délai pour l'ordinateur, vous pouvez ajuster la durée
+      if (this.gameService.isAnimating) {
+        this.gameService.isAnimating = false;
+        this.gameService.makeRandomMove();
+      } else {
+        this.gameService.makeRandomMove();
+      }
     }
   }
 
