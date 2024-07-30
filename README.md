@@ -1,27 +1,53 @@
-# Tictactoe
+# Tic Tac Toe - Application Angular
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 18.1.2.
+Bienvenue dans l'application Tic Tac Toe développée avec Angular ! Ce projet est une implémentation du célèbre jeu de stratégie où deux joueurs s'affrontent sur une grille de 3x3.
 
-## Development server
+## Principe du Jeu
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+Le Tic Tac Toe est un jeu simple mais amusant. Voici les règles de base :
 
-## Code scaffolding
+1. **Objectif** : Le but du jeu est d'aligner trois de ses symboles (X ou O) horizontalement, verticalement ou en diagonale sur une grille de 3x3.
+2. **Déroulement** : Les joueurs jouent à tour de rôle. Le premier joueur place un X, le second joueur place un O, et ainsi de suite.
+3. **Victoire** : Le premier joueur à aligner trois de ses symboles gagne la partie.
+4. **Match Nul** : Si tous les emplacements de la grille sont remplis sans qu'aucun joueur n'ait aligné trois symboles, la partie est déclarée nulle.
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+## Prérequis
 
-## Build
+Avant de lancer l'application, assurez-vous d'avoir installé les outils suivants :
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+- **Node.js** : [Télécharger Node.js](https://nodejs.org/)
+- **Angular CLI** : Vous pouvez l'installer via npm en utilisant la commande suivante :
+  ```bash
+  npm install -g @angular/cli
+  ```
+## Installation
 
-## Running unit tests
+1.  **Cloner le dépôt** : 
+  ```bash
+git clone https://github.com/DonFalcoF/tictactoe
+cd tictactoe
+```
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+2.  **Installer les dépendances** :
+  ```bash
+npm install
+```
 
-## Running end-to-end tests
+## Lancer l'Application
+Pour lancer l'application en mode développement, utilisez la commande suivante :
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+  ```bash
+ng serve
+```
 
-## Further help
+Ensuite, ouvrez votre navigateur et accédez à http://localhost:4200/. Vous devriez voir l'application Tic Tac Toe en cours d'exécution.
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+## Développement
+
+### Structure du Projet
+
+-   src/app/ : Contient les composants, services et modules de l'application.
+-   src/public/assets/ : Contient les fichiers statiques comme les images et les fichiers CSS.
+
+## Licence
+Ce projet est sous licence MIT
