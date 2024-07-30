@@ -29,4 +29,13 @@ export class GameSetupComponent {
       }
     });
   }
+
+  selectPlayerType(type: 'X' | 'O'): void {
+    this.playerType = type;
+  }
+
+  selectGridSize(size: number): void {
+    this.gridSize = size;
+  }
+
 }
