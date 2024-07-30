@@ -10,6 +10,7 @@ export class GameService {
   private gameOver!: boolean;
   private gridSize!: number;
   private initialized: boolean = false;
+  private winner: string | null = null;
 
   constructor() {}
 
@@ -20,6 +21,7 @@ export class GameService {
     );
     this.gameOver = false;
     this.initialized = true;
+    this.winner = null;
   }
 
   isGameInitialized(): boolean {
@@ -56,14 +58,18 @@ export class GameService {
   }
 
   getWinner(): string | null {
-    return this.gameOver ? this.currentPlayer : null;
+    return this.winner;
   }
 
   makeMove(row: number, col: number): boolean {
     if (this.board[row][col] === '' && !this.gameOver) {
       this.board[row][col] = this.currentPlayer;
-      if (this.checkWin() || this.isBoardFull()) {
+      if (this.checkWin()) {
         this.gameOver = true;
+        this.winner = this.currentPlayer;
+      } else if (this.isBoardFull()) {
+        this.gameOver = true;
+        this.winner = null; // Match nul
       } else {
         this.switchPlayer();
       }
@@ -86,8 +92,12 @@ export class GameService {
       const [row, col] =
         emptyCells[Math.floor(Math.random() * emptyCells.length)];
       this.board[row][col] = this.currentPlayer;
-      if (this.checkWin() || this.isBoardFull()) {
+      if (this.checkWin()) {
         this.gameOver = true;
+        this.winner = this.currentPlayer;
+      } else if (this.isBoardFull()) {
+        this.gameOver = true;
+        this.winner = null; // Match nul
       } else {
         this.switchPlayer();
       }

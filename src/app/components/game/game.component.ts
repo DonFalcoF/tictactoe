@@ -29,6 +29,7 @@ export class GameComponent implements OnInit {
 
   onCellClick(row: number, col: number): void {
     if (this.gameService.makeMove(row, col)) {
+      this.checkGameOver();
       this.makeComputerMove();
     }
   }
@@ -46,8 +47,15 @@ export class GameComponent implements OnInit {
             this.gameService.getInitialPlayer()
         ) {
           this.gameService.makeRandomMove();
+          this.checkGameOver();
         }
-      }, 500); // Delay for the computer move
+      }, 500); // Temps de délai pour l'ordinateur, vous pouvez ajuster la durée
+    }
+  }
+
+  checkGameOver(): void {
+    if (this.gameService.isGameOver()) {
+      // Afficher la modal avec le message de fin de jeu
     }
   }
 
