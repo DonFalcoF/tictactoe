@@ -1,7 +1,7 @@
 <div class="board">
   <div class="row" *ngFor="let row of gameService.getBoard(); let rowIndex = index">
-    <div class="cell" *ngFor="let cell of row; let colIndex = index" (click)="onCellClick(rowIndex, colIndex)">
-      {{ cell }}
+    <div class="cell"  *ngFor="let cell of row; let colIndex = index" (click)="onCellClick(rowIndex, colIndex)">
+      <span [class.x]="cell === 'X'" [class.o]="cell === 'O'">{{ cell }}</span>
     </div>
   </div>
 </div>

@@ -29,7 +29,6 @@ export class GameComponent implements OnInit {
 
   onCellClick(row: number, col: number): void {
     if (this.gameService.makeMove(row, col)) {
-      this.checkGameOver();
       this.makeComputerMove();
     }
   }
@@ -47,15 +46,8 @@ export class GameComponent implements OnInit {
             this.gameService.getInitialPlayer()
         ) {
           this.gameService.makeRandomMove();
-          this.checkGameOver();
         }
-      }, 500); // Temps de délai pour l'ordinateur, vous pouvez ajuster la durée
-    }
-  }
-
-  checkGameOver(): void {
-    if (this.gameService.isGameOver()) {
-      // Afficher la modal avec le message de fin de jeu
+      }, 200); // Temps de délai pour l'ordinateur, vous pouvez ajuster la durée
     }
   }
 
@@ -64,9 +56,8 @@ export class GameComponent implements OnInit {
   }
 
   private updateGridStyles(): void {
-    const cellSize = 100; // Taille de cellule par défaut
+    const cellSize = 120; // Taille de cellule par défaut
     const gridSize = this.gameService.getGridSize();
-
     this.document.documentElement.style.setProperty(
       '--grid-size',
       gridSize.toString()

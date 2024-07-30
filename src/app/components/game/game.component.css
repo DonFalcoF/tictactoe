@@ -1,0 +1,37 @@
+.board {
+  display: grid;
+  gap: 5px;
+  grid-template-columns: repeat(var(--grid-size), var(--cell-size));
+}
+
+.cell {
+  width: var(--cell-size);
+  height: var(--cell-size);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #f1f1f1;
+  font-size: 44px;
+  margin: 6px 20px;
+  cursor: pointer;
+  user-select: none;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(1, 1, 1, 1);
+  transition: background-color 0.3s ease;
+}
+
+.cell:hover {
+  background-color: #cccccc;
+}
+
+.x {
+  color: #f05454;
+}
+
+.o {
+  color: #70a1ff;
+}
+
+
+
+
