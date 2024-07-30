@@ -1,9 +1,24 @@
-<div class="board">
-  <div class="row" *ngFor="let row of gameService.getBoard(); let rowIndex = index">
-    <div class="cell"  *ngFor="let cell of row; let colIndex = index" (click)="onCellClick(rowIndex, colIndex)">
-      <span [class.x]="cell === 'X'" [class.o]="cell === 'O'">{{ cell }}</span>
+<div class="container">
+  <div class="board">
+    <div
+      class="row"
+      *ngFor="let row of gameService.getBoard(); let rowIndex = index"
+    >
+      <div
+        class="cell"
+        *ngFor="let cell of row; let colIndex = index"
+        (click)="onCellClick(rowIndex, colIndex)"
+      >
+        <span [class.x]="cell === 'X'" [class.o]="cell === 'O'">{{
+          cell
+        }}</span>
+      </div>
     </div>
   </div>
 </div>
 
-<app-game-over-modal *ngIf="gameService.isGameOver()" [winner]="gameService.getWinner()" (replay)="onReplay()"></app-game-over-modal>
+<app-game-over-modal
+  *ngIf="gameService.isGameOver()"
+  [winner]="gameService.getWinner()"
+  (replay)="onReplay()"
+></app-game-over-modal>

@@ -20,6 +20,7 @@ export class GameSetupComponent {
 
   startGame(): void {
     this.gameService.setPlayerType(this.playerType);
+    console.log(this.gridSize);
     this.gameService.newGame(this.gridSize);
     this.router.navigate(['/game']).then(() => {
       if (this.playerType === 'O') {

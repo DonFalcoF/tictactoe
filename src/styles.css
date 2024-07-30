@@ -1,6 +1,6 @@
 @font-face {
   font-family: "Roboto";
-  src: url(../public/609e5947-7d94-49a4-b4c7-11311739d47a.woff2) format("woff2");
+  src: url(../public/assets/609e5947-7d94-49a4-b4c7-11311739d47a.woff2) format("woff2");
 }
 
 * {
@@ -13,11 +13,10 @@ body {
   font-family: "Roboto", sans-serif;
   background-color: #120c3a;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
-  height: 100vh;
-  width: 100vw;
-  background-image: url(../public/hero-swirl-shape.svg);
+  background-image: url(../public/assets/hero-swirl-shape.svg);
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
