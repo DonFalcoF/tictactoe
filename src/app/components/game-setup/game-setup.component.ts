@@ -14,7 +14,7 @@ import { GameService } from '../../services/game.service';
 export class GameSetupComponent {
   playerType: 'X' | 'O' = 'X';
   gridSize: number = 3;
-  gridSizes = [3, 4, 5];
+  gridSizes = [3, 4, 5, 6];
 
   constructor(private router: Router, private gameService: GameService) {}
 

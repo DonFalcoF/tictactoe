@@ -11,6 +11,7 @@
   display: grid;
   gap: 5px;
   grid-template-columns: repeat(var(--grid-size), var(--cell-size));
+  z-index: 400;
 }
 
 .cell {
