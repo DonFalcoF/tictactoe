@@ -6,7 +6,7 @@ import { CommonModule } from '@angular/common';
   standalone: true,
   imports: [CommonModule],
   templateUrl: './game-over-modal.component.html',
-  styleUrls: ['./game-over-modal.component.css']
+  styleUrls: ['./game-over-modal.component.css'],
 })
 export class GameOverModalComponent {
   @Input() winner!: string | null;

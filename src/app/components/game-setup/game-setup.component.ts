@@ -9,7 +9,7 @@ import { GameService } from '../../services/game.service';
   standalone: true,
   imports: [CommonModule, FormsModule],
   templateUrl: './game-setup.component.html',
-  styleUrls: ['./game-setup.component.css']
+  styleUrls: ['./game-setup.component.css'],
 })
 export class GameSetupComponent {
   playerType: 'X' | 'O' = 'X';
