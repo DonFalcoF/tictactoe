@@ -6,7 +6,6 @@ import { Injectable } from '@angular/core';
 export class GameService {
   private board!: string[][];
   private currentPlayer!: string;
-  private players!: { human: string; computer: string };
   private gameOver!: boolean;
   private gridSize!: number; // Taille de la grille
 
@@ -22,17 +21,12 @@ export class GameService {
       Array.from({ length: this.gridSize }, () => '')
     );
     this.currentPlayer = 'X';
-    this.players = { human: 'X', computer: 'O' };
     this.gameOver = false;
     console.log('Board after initialization', this.board);
   }
 
   setPlayerType(playerType: 'X' | 'O'): void {
-    this.players = {
-      human: playerType,
-      computer: playerType === 'X' ? 'O' : 'X',
-    };
-    this.currentPlayer = 'X'; // X commence toujours
+    this.currentPlayer = playerType;
   }
 
   getBoard(): string[][] {
@@ -52,7 +46,7 @@ export class GameService {
         this.gameOver = true;
       } else {
         this.switchPlayer();
-        if (this.currentPlayer === this.players.computer) {
+        if (this.currentPlayer === 'O') {
           this.makeRandomMove();
         }
       }
@@ -104,7 +98,8 @@ export class GameService {
     });
 
     if (emptyCells.length > 0) {
-      const [row, col] = emptyCells[Math.floor(Math.random() * emptyCells.length)];
+      const [row, col] =
+        emptyCells[Math.floor(Math.random() * emptyCells.length)];
       this.board[row][col] = this.currentPlayer;
       if (this.checkWin()) {
         this.gameOver = true;
