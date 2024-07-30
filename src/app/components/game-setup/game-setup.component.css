@@ -54,8 +54,16 @@
   transition: background-color 0.3s ease;
 }
 
+.radio-card:hover {
+  background-color: #5cb1b6;
+}
+
 .radio-card.selected {
   background-color: #412888;
+}
+
+.radio-card.selected:hover {
+  background-color: #2d1f5f;
 }
 
 .carousel-container {
