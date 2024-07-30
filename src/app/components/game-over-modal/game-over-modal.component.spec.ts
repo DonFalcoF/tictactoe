@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ModalComponent } from './modal.component';
+import { GameOverModalComponent } from './game-over-modal.component';
 
-describe('ModalComponent', () => {
-  let component: ModalComponent;
-  let fixture: ComponentFixture<ModalComponent>;
+describe('GameOverModalComponent', () => {
+  let component: GameOverModalComponent;
+  let fixture: ComponentFixture<GameOverModalComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [ModalComponent]
+      imports: [GameOverModalComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(ModalComponent);
+    fixture = TestBed.createComponent(GameOverModalComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

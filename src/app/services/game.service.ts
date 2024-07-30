@@ -5,28 +5,46 @@ import { Injectable } from '@angular/core';
 })
 export class GameService {
   private board!: string[][];
-  private currentPlayer!: string;
+  private currentPlayer!: 'X' | 'O';
+  private initialPlayer!: 'X' | 'O';
   private gameOver!: boolean;
-  private gridSize!: number; // Taille de la grille
+  private gridSize!: number;
+  private initialized: boolean = false;
 
-  constructor() {
-    this.gridSize = 3; // Valeur par défaut
-    this.newGame(this.gridSize);
-  }
+  constructor() {}
 
-  newGame(gridSize: number = 3): void {
+  newGame(gridSize: number): void {
     this.gridSize = gridSize;
-    // Générer la grille en fonction de la taille choisie
     this.board = Array.from({ length: this.gridSize }, () =>
       Array.from({ length: this.gridSize }, () => '')
     );
-    this.currentPlayer = 'X';
     this.gameOver = false;
-    console.log('Board after initialization', this.board);
+    this.initialized = true;
+  }
+
+  isGameInitialized(): boolean {
+    return this.initialized;
+  }
+
+  getGridSize(): number {
+    return this.gridSize;
   }
 
   setPlayerType(playerType: 'X' | 'O'): void {
+    this.initialPlayer = playerType;
     this.currentPlayer = playerType;
+  }
+
+  setCurrentPlayer(playerType: 'X' | 'O'): void {
+    this.currentPlayer = playerType;
+  }
+
+  getCurrentPlayer(): 'X' | 'O' {
+    return this.currentPlayer;
+  }
+
+  getInitialPlayer(): 'X' | 'O' {
+    return this.initialPlayer;
   }
 
   getBoard(): string[][] {
@@ -37,26 +55,51 @@ export class GameService {
     return this.gameOver;
   }
 
+  getWinner(): string | null {
+    return this.gameOver ? this.currentPlayer : null;
+  }
+
   makeMove(row: number, col: number): boolean {
     if (this.board[row][col] === '' && !this.gameOver) {
       this.board[row][col] = this.currentPlayer;
-      if (this.checkWin()) {
-        this.gameOver = true;
-      } else if (this.isBoardFull()) {
+      if (this.checkWin() || this.isBoardFull()) {
         this.gameOver = true;
       } else {
         this.switchPlayer();
-        if (this.currentPlayer === 'O') {
-          this.makeRandomMove();
-        }
       }
       return true;
     }
     return false;
   }
 
+  makeRandomMove(): void {
+    const emptyCells: number[][] = [];
+    this.board.forEach((row, rowIndex) => {
+      row.forEach((cell, colIndex) => {
+        if (cell === '') {
+          emptyCells.push([rowIndex, colIndex]);
+        }
+      });
+    });
+
+    if (emptyCells.length > 0) {
+      const [row, col] =
+        emptyCells[Math.floor(Math.random() * emptyCells.length)];
+      this.board[row][col] = this.currentPlayer;
+      if (this.checkWin() || this.isBoardFull()) {
+        this.gameOver = true;
+      } else {
+        this.switchPlayer();
+      }
+    }
+  }
+
   private switchPlayer(): void {
-    this.currentPlayer = this.currentPlayer === 'X' ? 'O' : 'X';
+    if (this.currentPlayer === this.initialPlayer) {
+      this.currentPlayer = this.initialPlayer === 'X' ? 'O' : 'X';
+    } else {
+      this.currentPlayer = this.initialPlayer;
+    }
   }
 
   private isBoardFull(): boolean {
@@ -72,42 +115,17 @@ export class GameService {
 
   private generateWinLines(): number[][][] {
     const lines: number[][][] = [];
-    const n = this.gridSize;
-
-    // Génération des lignes et colonnes
-    for (let i = 0; i < n; i++) {
-      lines.push(Array.from({ length: n }, (_, j) => [i, j])); // Ligne
-      lines.push(Array.from({ length: n }, (_, j) => [j, i])); // Colonne
+    for (let i = 0; i < this.gridSize; i++) {
+      lines.push(Array.from({ length: this.gridSize }, (_, j) => [i, j]));
+      lines.push(Array.from({ length: this.gridSize }, (_, j) => [j, i]));
     }
-
-    // Diagonales
-    lines.push(Array.from({ length: n }, (_, i) => [i, i])); // Diagonale principale
-    lines.push(Array.from({ length: n }, (_, i) => [i, n - 1 - i])); // Diagonale secondaire
-
+    lines.push(Array.from({ length: this.gridSize }, (_, i) => [i, i]));
+    lines.push(
+      Array.from({ length: this.gridSize }, (_, i) => [
+        i,
+        this.gridSize - 1 - i,
+      ])
+    );
     return lines;
-  }
-
-  private makeRandomMove(): void {
-    const emptyCells: number[][] = [];
-    this.board.forEach((row, rowIndex) => {
-      row.forEach((cell, colIndex) => {
-        if (cell === '') {
-          emptyCells.push([rowIndex, colIndex]);
-        }
-      });
-    });
-
-    if (emptyCells.length > 0) {
-      const [row, col] =
-        emptyCells[Math.floor(Math.random() * emptyCells.length)];
-      this.board[row][col] = this.currentPlayer;
-      if (this.checkWin()) {
-        this.gameOver = true;
-      } else if (this.isBoardFull()) {
-        this.gameOver = true;
-      } else {
-        this.switchPlayer();
-      }
-    }
   }
 }

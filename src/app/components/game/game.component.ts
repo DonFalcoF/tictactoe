@@ -1,45 +1,72 @@
-import { Component, Inject, OnInit, Renderer2 } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
-import { BoardComponent } from '../board/board.component';
 import { GameService } from '../../services/game.service';
+import { BoardComponent } from '../board/board.component';
+import { GameOverModalComponent } from '../game-over-modal/game-over-modal.component';
 import { DOCUMENT } from '@angular/common';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-game',
   standalone: true,
-  imports: [CommonModule, FormsModule, BoardComponent],
+  imports: [CommonModule, BoardComponent, GameOverModalComponent],
   templateUrl: './game.component.html',
-  styleUrls: ['./game.component.css']
+  styleUrls: ['./game.component.css'],
 })
 export class GameComponent implements OnInit {
-  playerType: 'X' | 'O' = 'X';
-  gridSize: number = 3;
-  gridSizes = [3, 4, 5];
-
-  constructor(public gameService: GameService, @Inject(DOCUMENT) private document: Document) { }
+  constructor(
+    public gameService: GameService,
+    @Inject(DOCUMENT) private document: Document,
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
-    this.newGame();
+    if (!this.gameService.isGameInitialized()) {
+      this.router.navigate(['/setup']);
+    } else {
+      this.updateGridStyles();
+    }
   }
 
-  onPlayerTypeChange(type: 'X' | 'O'): void {
-    this.playerType = type;
-    this.gameService.setPlayerType(type);
+  onCellClick(row: number, col: number): void {
+    if (this.gameService.makeMove(row, col)) {
+      this.checkGameOver();
+      this.makeComputerMove();
+    }
   }
 
-  newGame(size: number = this.gridSize): void {
-    this.gridSize = size;
-    this.gameService.newGame(this.gridSize);
-    this.updateGridStyles();
+  makeComputerMove(): void {
+    if (!this.gameService.isGameOver() && this.gameService.getCurrentPlayer() !== this.gameService.getInitialPlayer()) {
+      setTimeout(() => {
+        if (!this.gameService.isGameOver() && this.gameService.getCurrentPlayer() !== this.gameService.getInitialPlayer()) {
+          this.gameService.makeRandomMove();
+          this.checkGameOver();
+        }
+      }, 500); // Temps de délai pour l'ordinateur, vous pouvez ajuster la durée
+    }
+  }
+
+  checkGameOver(): void {
+    if (this.gameService.isGameOver()) {
+      // Afficher la modal avec le message de fin de jeu
+    }
+  }
+
+  onReplay(): void {
+    this.router.navigate(['/setup']);
   }
 
   private updateGridStyles(): void {
     const cellSize = 100; // Taille de cellule par défaut
-    const gridSize = this.gridSize;
+    const gridSize = this.gameService.getGridSize();
 
-    this.document.documentElement.style.setProperty('--grid-size', gridSize.toString());
-    this.document.documentElement.style.setProperty('--cell-size', `${cellSize}px`);
+    this.document.documentElement.style.setProperty(
+      '--grid-size',
+      gridSize.toString()
+    );
+    this.document.documentElement.style.setProperty(
+      '--cell-size',
+      `${cellSize}px`
+    );
   }
-
 }

@@ -1,24 +1,9 @@
-<div>
-  <h1>Tic Tac Toe</h1>
-  <div>
-    <label>
-      <input type="radio" name="playerType" value="X" (change)="onPlayerTypeChange('X')" [checked]="playerType === 'X'">
-      X
-    </label>
-    <label>
-      <input type="radio" name="playerType" value="O" (change)="onPlayerTypeChange('O')" [checked]="playerType === 'O'">
-      O
-    </label>
+<div class="board">
+  <div class="row" *ngFor="let row of gameService.getBoard(); let rowIndex = index">
+    <div class="cell" *ngFor="let cell of row; let colIndex = index" (click)="onCellClick(rowIndex, colIndex)">
+      {{ cell }}
+    </div>
   </div>
-  <div>
-    <label for="gridSize">Select Grid Size:</label>
-    <select id="gridSize" [(ngModel)]="gridSize" (change)="newGame(gridSize)">
-      <option *ngFor="let size of gridSizes" [value]="size">{{ size }}x{{ size }}</option>
-    </select>
-  </div>
-
-  <app-board></app-board>
-  <button (click)="newGame()">New Game</button>
 </div>
 
-
+<app-game-over-modal *ngIf="gameService.isGameOver()" [winner]="gameService.getWinner()" (replay)="onReplay()"></app-game-over-modal>

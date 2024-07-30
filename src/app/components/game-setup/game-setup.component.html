@@ -1,0 +1,20 @@
+<div>
+  <h1>Setup Tic Tac Toe</h1>
+  <div>
+    <label>
+      <input type="radio" name="playerType" value="X" [(ngModel)]="playerType">
+      X
+    </label>
+    <label>
+      <input type="radio" name="playerType" value="O" [(ngModel)]="playerType">
+      O
+    </label>
+  </div>
+  <div>
+    <label for="gridSize">Select Grid Size:</label>
+    <select id="gridSize" [(ngModel)]="gridSize">
+      <option *ngFor="let size of gridSizes" [value]="size">{{ size }}x{{ size }}</option>
+    </select>
+  </div>
+  <button (click)="startGame()">Start Game</button>
+</div>
