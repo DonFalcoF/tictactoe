@@ -1,1 +1,17 @@
-/* You can add global styles to this file, and also import other style files */
+.board {
+  display: grid;
+  gap: 5px;
+  grid-template-columns: repeat(var(--grid-size), var(--cell-size));}
+
+.cell {
+  width: var(--cell-size);
+  height: var(--cell-size);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #f1f1f1;
+  font-size: 24px;
+  cursor: pointer;
+  user-select: none;
+  margin: 5px;
+}
