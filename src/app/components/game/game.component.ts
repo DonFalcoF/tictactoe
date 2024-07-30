@@ -2,7 +2,7 @@ import { Component, Inject, OnInit, Renderer2 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { BoardComponent } from '../board/board.component';
-import { GameService } from '../game.service';
+import { GameService } from '../../services/game.service';
 import { DOCUMENT } from '@angular/common';
 
 @Component({
