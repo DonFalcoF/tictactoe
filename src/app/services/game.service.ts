@@ -4,11 +4,11 @@ import { Injectable } from '@angular/core';
   providedIn: 'root',
 })
 export class GameService {
-  private board!: string[][];
-  private currentPlayer!: 'X' | 'O';
-  private initialPlayer!: 'X' | 'O';
-  private gameOver!: boolean;
-  private gridSize!: number;
+  private board: string[][] = [];
+  private currentPlayer: 'X' | 'O' = 'X';
+  private initialPlayer: 'X' | 'O' = 'X';
+  private gameOver: boolean = false;
+  private gridSize: number = 3; // Par défaut à 3x3
   private initialized: boolean = false;
   private winner: string | null = null;
   winningLine: number[][] = [];
@@ -24,6 +24,8 @@ export class GameService {
     this.gameOver = false;
     this.initialized = true;
     this.winner = null;
+    this.winningLine = [];
+    this.currentPlayer = this.initialPlayer;
   }
 
   isGameInitialized(): boolean {
@@ -68,7 +70,6 @@ export class GameService {
       this.isAnimating = true;
       this.board[row][col] = this.currentPlayer;
       if (this.checkWin()) {
-        // pause de 1 seconde avant de déclarer le gagnant
         setTimeout(() => {
           this.gameOver = true;
           this.isAnimating = false;
@@ -86,29 +87,14 @@ export class GameService {
   }
 
   makeRandomMove(): void {
-    const emptyCells: number[][] = [];
-    this.board.forEach((row, rowIndex) => {
-      row.forEach((cell, colIndex) => {
-        if (cell === '') {
-          emptyCells.push([rowIndex, colIndex]);
-        }
-      });
-    });
+    const emptyCells: number[][] = this.board.flatMap((row, rowIndex) =>
+      row.map((cell, colIndex) => (cell === '' ? [rowIndex, colIndex] : null))
+    ).filter(Boolean) as number[][];
 
     if (emptyCells.length > 0) {
       const [row, col] =
         emptyCells[Math.floor(Math.random() * emptyCells.length)];
-      this.board[row][col] = this.currentPlayer;
-      if (this.checkWin()) {
-        this.isAnimating = true;
-        this.gameOver = true;
-        this.winner = this.currentPlayer;
-      } else if (this.isBoardFull()) {
-        this.gameOver = true;
-        this.winner = null; // Match nul
-      } else {
-        this.switchPlayer();
-      }
+      this.makeMove(row, col);
     }
   }
 
@@ -117,11 +103,7 @@ export class GameService {
   }
 
   private switchPlayer(): void {
-    if (this.currentPlayer === this.initialPlayer) {
-      this.currentPlayer = this.initialPlayer === 'X' ? 'O' : 'X';
-    } else {
-      this.currentPlayer = this.initialPlayer;
-    }
+    this.currentPlayer = this.currentPlayer === 'X' ? 'O' : 'X';
   }
 
   private isBoardFull(): boolean {
@@ -139,20 +121,19 @@ export class GameService {
     return false;
   }
 
-
   private generateWinLines(): number[][][] {
     const lines: number[][][] = [];
+
+    // Rows and columns
     for (let i = 0; i < this.gridSize; i++) {
       lines.push(Array.from({ length: this.gridSize }, (_, j) => [i, j]));
       lines.push(Array.from({ length: this.gridSize }, (_, j) => [j, i]));
     }
+
+    // Diagonals
     lines.push(Array.from({ length: this.gridSize }, (_, i) => [i, i]));
-    lines.push(
-      Array.from({ length: this.gridSize }, (_, i) => [
-        i,
-        this.gridSize - 1 - i,
-      ])
-    );
+    lines.push(Array.from({ length: this.gridSize }, (_, i) => [i, this.gridSize - 1 - i]));
+
     return lines;
   }
 }

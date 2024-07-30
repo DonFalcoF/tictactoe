@@ -23,6 +23,7 @@ export class GameSetupComponent {
     this.gameService.newGame(this.gridSize);
     this.router.navigate(['/game']).then(() => {
       if (this.playerType === 'O') {
+        // case if 'O' is the first player
         this.gameService.setCurrentPlayer('X'); // Set current player to 'X' for the first move
         this.gameService.makeRandomMove();
         this.gameService.setCurrentPlayer('O'); // Set current player back to 'O'
