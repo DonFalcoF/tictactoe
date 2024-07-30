@@ -7,6 +7,27 @@
   width: 100%;
 }
 
+.container-title{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 20px;
+  width: 100vw;
+}
+
+.title{
+  color: #412888;
+  font-size: 3rem;
+  font-weight: bold;
+}
+
+.instruction{
+  color: #ffa086;
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
 .board {
   display: grid;
   gap: 5px;
@@ -18,7 +39,7 @@
   width: var(--cell-size);
   height: var(--cell-size);
   display: flex;
-  margin: 10px 0;
+  margin: 4px 0;
   align-items: center;
   justify-content: center;
   background-color: #f1f1f1;

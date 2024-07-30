@@ -58,7 +58,7 @@ export class GameComponent implements OnInit {
   }
 
   private updateGridStyles(): void {
-    const cellSize = 120; // Taille de cellule par défaut
+    const cellSize = 100; // Taille de cellule par défaut
     const gridSize = this.gameService.getGridSize();
     gridSize > 4
       ? this.document.documentElement.style.setProperty(
