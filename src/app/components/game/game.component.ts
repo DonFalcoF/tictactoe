@@ -2,6 +2,8 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { GameService } from '../../services/game.service';
 import { GameOverModalComponent } from '../game-over-modal/game-over-modal.component';
+
+//Use DOCUMENT to access the DOM because Angular's renderer is not available in standalone components and SSR
 import { DOCUMENT } from '@angular/common';
 import { Router } from '@angular/router';
 
@@ -15,6 +17,7 @@ import { Router } from '@angular/router';
 export class GameComponent implements OnInit {
   constructor(
     public gameService: GameService,
+    // Inject the document object to access the DOM
     @Inject(DOCUMENT) private document: Document,
     private router: Router
   ) {}

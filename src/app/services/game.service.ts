@@ -49,8 +49,11 @@ export class GameService {
           this.winner = this.currentPlayer;
         }, 1500);
       } else if (this.isBoardFull()) {
-        this.gameOver = true;
-        this.winner = null; // Match nul
+        setTimeout(() => {
+          this.gameOver = true;
+          this.isAnimating = false;
+          this.winner = null; // Match nul
+        }, 1500);
       } else {
         this.switchPlayer();
       }
@@ -58,6 +61,7 @@ export class GameService {
     }
     return false;
   }
+
 
   /**
    *   This method makes a random move on the board
@@ -151,18 +155,18 @@ export class GameService {
     return this.winner;
   }
 
+    /**
+   * This method checks if the board is full
+   * */
+    isBoardFull(): boolean {
+      return this.board.every(row => row.every(cell => cell !== ''));
+    }
+
   /**
    * This method switches the player
    * */
   private switchPlayer(): void {
     this.currentPlayer = this.currentPlayer === 'X' ? 'O' : 'X';
-  }
-
-  /**
-   * This method checks if the board is full
-   * */
-  private isBoardFull(): boolean {
-    return this.board.every((row) => row.every((cell) => cell !== ''));
   }
 
   /**

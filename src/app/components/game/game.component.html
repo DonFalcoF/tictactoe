@@ -19,7 +19,8 @@
 </div>
 
 <app-game-over-modal
-  *ngIf="gameService.isGameOver() && !gameService.isAnimating"
+  *ngIf="gameService.isGameOver() || gameService.isBoardFull()"
   [winner]="gameService.getWinner()"
   (replay)="onReplay()"
 ></app-game-over-modal>
+
