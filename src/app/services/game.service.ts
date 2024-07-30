@@ -14,8 +14,10 @@ export class GameService {
   winningLine: number[][] = [];
   isAnimating: boolean = false;
 
-  constructor() {}
-
+  /**
+   *   This method initializes the game with a new grid size
+   *   and resets the game state
+   */
   newGame(gridSize: number): void {
     this.gridSize = gridSize;
     this.board = Array.from({ length: this.gridSize }, () =>
@@ -24,47 +26,18 @@ export class GameService {
     this.gameOver = false;
     this.initialized = true;
     this.winner = null;
+    this.isAnimating = false;
     this.winningLine = [];
     this.currentPlayer = this.initialPlayer;
   }
 
-  isGameInitialized(): boolean {
-    return this.initialized;
-  }
-
-  getGridSize(): number {
-    return this.gridSize;
-  }
-
-  setPlayerType(playerType: 'X' | 'O'): void {
-    this.initialPlayer = playerType;
-    this.currentPlayer = playerType;
-  }
-
-  setCurrentPlayer(playerType: 'X' | 'O'): void {
-    this.currentPlayer = playerType;
-  }
-
-  getCurrentPlayer(): 'X' | 'O' {
-    return this.currentPlayer;
-  }
-
-  getInitialPlayer(): 'X' | 'O' {
-    return this.initialPlayer;
-  }
-
-  getBoard(): string[][] {
-    return this.board;
-  }
-
-  isGameOver(): boolean {
-    return this.gameOver;
-  }
-
-  getWinner(): string | null {
-    return this.winner;
-  }
-
+  /**
+   *   This method makes a move on the board
+   *   @param row The row of the cell
+   *   @param col The column of the cell
+   *   @returns boolean
+   *  Returns true if the move was successful, false otherwise
+   * */
   makeMove(row: number, col: number): boolean {
     if (this.board[row][col] === '' && !this.gameOver) {
       this.isAnimating = true;
@@ -86,6 +59,9 @@ export class GameService {
     return false;
   }
 
+  /**
+   *   This method makes a random move on the board
+   * */
   makeRandomMove(): void {
     const emptyCells: number[][] = this.board.flatMap((row, rowIndex) =>
       row.map((cell, colIndex) => (cell === '' ? [rowIndex, colIndex] : null))
@@ -98,18 +74,102 @@ export class GameService {
     }
   }
 
+  /**
+   *  This method checks if a cell is part of the winning line
+   * @param row The row of the cell
+   * @param col The column of the cell
+   * @returns boolean
+   * Returns true if the cell is part of the winning line, false otherwise
+   * */
   isWinningCell(row: number, col: number): boolean {
     return this.winningLine.some(([x, y]) => x === row && y === col);
   }
 
+  /**
+   * This method checks if the game is initialized
+   **/
+  isGameInitialized(): boolean {
+    return this.initialized;
+  }
+
+  /**
+   * This method returns the grid size
+   **/
+  getGridSize(): number {
+    return this.gridSize;
+  }
+
+  /**
+   * This method sets the player type
+   * @param playerType The player type
+   **/
+  setPlayerType(playerType: 'X' | 'O'): void {
+    this.initialPlayer = playerType;
+    this.currentPlayer = playerType;
+  }
+
+  /**
+   * This method sets the current player
+   * @param playerType The player type
+   * */
+  setCurrentPlayer(playerType: 'X' | 'O'): void {
+    this.currentPlayer = playerType;
+  }
+
+  /**
+   * This method returns the current player
+   * */
+  getCurrentPlayer(): 'X' | 'O' {
+    return this.currentPlayer;
+  }
+
+  /**
+   * This method returns the initial player
+   * */
+  getInitialPlayer(): 'X' | 'O' {
+    return this.initialPlayer;
+  }
+
+  /**
+   * This method returns the board
+   * */
+  getBoard(): string[][] {
+    return this.board;
+  }
+
+  /**
+   * This method checks if the game is over
+   * */
+  isGameOver(): boolean {
+    return this.gameOver;
+  }
+
+  /**
+   * This method returns the winner
+   * */
+  getWinner(): string | null {
+    return this.winner;
+  }
+
+  /**
+   * This method switches the player
+   * */
   private switchPlayer(): void {
     this.currentPlayer = this.currentPlayer === 'X' ? 'O' : 'X';
   }
 
+  /**
+   * This method checks if the board is full
+   * */
   private isBoardFull(): boolean {
     return this.board.every((row) => row.every((cell) => cell !== ''));
   }
 
+  /**
+   * This method checks if the current player has won
+   * @returns boolean
+   * Returns true if the current player has won, false otherwise
+   * */
   private checkWin(): boolean {
     const winLines = this.generateWinLines();
     for (const line of winLines) {
@@ -121,6 +181,10 @@ export class GameService {
     return false;
   }
 
+  /**
+   * This method returns the winning line
+   * @returns number[][][]
+   * */
   private generateWinLines(): number[][][] {
     const lines: number[][][] = [];
 
