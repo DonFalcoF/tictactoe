@@ -1,7 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { GameService } from '../../services/game.service';
-import { BoardComponent } from '../board/board.component';
 import { GameOverModalComponent } from '../game-over-modal/game-over-modal.component';
 import { DOCUMENT } from '@angular/common';
 import { Router } from '@angular/router';
@@ -9,7 +8,7 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'app-game',
   standalone: true,
-  imports: [CommonModule, BoardComponent, GameOverModalComponent],
+  imports: [CommonModule, GameOverModalComponent],
   templateUrl: './game.component.html',
   styleUrls: ['./game.component.css'],
 })
