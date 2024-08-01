@@ -47,7 +47,7 @@ Ensuite, ouvrez votre navigateur et accédez à http://localhost:4200/. Vous dev
 ### Structure du Projet
 
 -   src/app/ : Contient les composants, services et modules de l'application.
--   src/public/assets/ : Contient les fichiers statiques comme les images et les fichiers CSS.
+-   src/public/assets/ : Contient les fichiers statiques comme les images.
 
 ## Licence
 Ce projet est sous licence MIT
