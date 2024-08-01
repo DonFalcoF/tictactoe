@@ -6,7 +6,8 @@ import { GameSetupComponent } from './pages/game-setup/game-setup.component';
 export const routes: Routes = [
   { path: '', redirectTo: '/setup', pathMatch: 'full' },
   { path: 'setup', component: GameSetupComponent },
-  { path: 'game', component: GameComponent }
+  { path: 'game', component: GameComponent },
+  { path: '**', redirectTo: '/setup' }
 ];
 
 export const routerProviders = [provideRouter(routes)];

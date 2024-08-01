@@ -20,8 +20,8 @@ export class GameService {
    */
   newGame(gridSize: number): void {
     this.gridSize = gridSize;
-    this.board = Array.from({ length: this.gridSize }, () =>
-      Array.from({ length: this.gridSize }, () => '')
+    this.board = Array.from({ length: gridSize }, () =>
+      Array(gridSize).fill('')
     );
     this.gameOver = false;
     this.initialized = true;
@@ -42,34 +42,38 @@ export class GameService {
     if (this.board[row][col] === '' && !this.gameOver) {
       this.isAnimating = true;
       this.board[row][col] = this.currentPlayer;
+
       if (this.checkWin()) {
+        this.gameOver = true;
+        this.winner = this.currentPlayer;
         setTimeout(() => {
-          this.gameOver = true;
           this.isAnimating = false;
-          this.winner = this.currentPlayer;
         }, 1500);
       } else if (this.isBoardFull()) {
+        this.gameOver = true;
+        this.winner = null; // Match nul
         setTimeout(() => {
-          this.gameOver = true;
           this.isAnimating = false;
-          this.winner = null; // Match nul
         }, 1500);
       } else {
         this.switchPlayer();
       }
+
       return true;
     }
+
     return false;
   }
-
 
   /**
    *   This method makes a random move on the board
    * */
   makeRandomMove(): void {
-    const emptyCells: number[][] = this.board.flatMap((row, rowIndex) =>
-      row.map((cell, colIndex) => (cell === '' ? [rowIndex, colIndex] : null))
-    ).filter(Boolean) as number[][];
+    const emptyCells: number[][] = this.board
+      .flatMap((row, rowIndex) =>
+        row.map((cell, colIndex) => (cell === '' ? [rowIndex, colIndex] : null))
+      )
+      .filter(Boolean) as number[][];
 
     if (emptyCells.length > 0) {
       const [row, col] =
@@ -155,12 +159,12 @@ export class GameService {
     return this.winner;
   }
 
-    /**
+  /**
    * This method checks if the board is full
    * */
-    isBoardFull(): boolean {
-      return this.board.every(row => row.every(cell => cell !== ''));
-    }
+  isBoardFull(): boolean {
+    return this.board.every((row) => row.every((cell) => cell !== ''));
+  }
 
   /**
    * This method switches the player
@@ -200,7 +204,12 @@ export class GameService {
 
     // Diagonals
     lines.push(Array.from({ length: this.gridSize }, (_, i) => [i, i]));
-    lines.push(Array.from({ length: this.gridSize }, (_, i) => [i, this.gridSize - 1 - i]));
+    lines.push(
+      Array.from({ length: this.gridSize }, (_, i) => [
+        i,
+        this.gridSize - 1 - i,
+      ])
+    );
 
     return lines;
   }
