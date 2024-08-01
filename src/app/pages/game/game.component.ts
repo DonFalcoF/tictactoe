@@ -1,7 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { GameService } from '../../services/game.service';
-import { GameOverModalComponent } from '../game-over-modal/game-over-modal.component';
+import { GameOverModalComponent } from '../../components/game-over-modal/game-over-modal.component';
 
 //Use DOCUMENT to access the DOM because Angular's renderer is not available in standalone components and SSR
 import { DOCUMENT } from '@angular/common';
